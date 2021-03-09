@@ -69,6 +69,20 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="projects">Connection with: </label>
+                                            <select name="staff_id" id="" class="form-control">
+                                                <option value="">--Choose a staff--</option>
+                                                @foreach ($staffs as $staff)
+                                                    <option value="{{$staff->id}}"{{$staff->id == $client->staff_id?'selected':''}}>{{$staff->name}}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('staff_id')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
 
                                 </div>
                                 <button type="submit" class="btn btn-success mt-3">Submit</button>

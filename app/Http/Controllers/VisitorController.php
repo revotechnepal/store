@@ -69,7 +69,7 @@ class VisitorController extends Controller
     public function create()
     {
         if(checkpermission(Auth::user()->role_id, 15)){
-            $staff = Staff::latest()->get();
+            $staff = Staff::latest()->where('status', 1)->get();
             return view('backend.visitors.create', compact('staff'));
         }else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
@@ -134,7 +134,7 @@ class VisitorController extends Controller
     public function edit($id)
     {
         $visitor = Visitor::findorFail($id);
-        $staff = Staff::latest()->get();
+        $staff = Staff::latest()->where('status', 1)->get();
         return view('backend.visitors.edit', compact('visitor', 'staff'));
     }
 

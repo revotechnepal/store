@@ -44,7 +44,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="month">Select a year and month to filter:</label>
-                                <input type="month" name="monthyear" value="2020-05" class="form-control">
+                                @php
+                                    $today = date('Y-m');
+                                @endphp
+                                <input type="month" name="monthyear" value="{{$today}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6 mt-4 text-left">
@@ -79,7 +82,9 @@
                                     <th>Allocated Salary</th>
                                     <th>Paid Amount</th>
                                     <th>Paid on</th>
-                                    <th>Payment Type</th>
+                                    <th>Payment type</th>
+                                    <th>For month</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,14 +99,22 @@
                                         </td>
                                         <td>Rs. {{$report->staff->allocated_salary}}</td>
                                         <td>Rs. {{$report->amount}}</td>
-                                        <td>{{date('F j, y', strtotime($report->payment_date))}}</td>
+                                        <td>{{date('F j, Y', strtotime($report->payment_date))}}</td>
                                         <td>
-                                            @if ($report->salary_type == 'advance')
-                                                Advance
-                                            @elseif ($report->salary_type == 'regular')
-                                                Regular
-                                            @endif
+                                            @php
+                                                if ($report->salary_type == 'advance') {
+                                                    $salary_type = 'Advance';
+                                                }elseif($report->salary_type == 'regular')
+                                                {
+                                                    $salary_type = 'Regular';
+                                                }
+                                            @endphp
+                                            {{$salary_type}}
                                         </td>
+                                        <td>
+                                            {{$report->monthyear}}
+                                        </td>
+                                        <td><a href="{{route('pdf.generate', $report->id)}}" class="btn btn-success">Download (in PDF)</a></td>
                                     </tr>
                                 @endforeach
 

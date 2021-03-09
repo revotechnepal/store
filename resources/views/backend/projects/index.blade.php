@@ -45,7 +45,7 @@
                                 <th class="text-center">State</th>
                                 <th class="text-center">Started Date</th>
                                 <th class="text-center">Completed Date</th>
-                                <th class="text-center">Total Cost</th>
+                                {{-- <th class="text-center">Total Cost</th> --}}
                                 <th class="text-center">Category</th>
                                 <th class="text-center">Action</th>
                             </tr>
@@ -75,7 +75,7 @@
               {data: 'state', name: 'state'},
               {data: 'started_date', name: 'started_date'},
               {data: 'completed_date', name: 'completed_date'},
-              {data: 'price', name: 'price'},
+            //   {data: 'price', name: 'price'},
               {data: 'category', name: 'category'},
               {
                   data: 'action',

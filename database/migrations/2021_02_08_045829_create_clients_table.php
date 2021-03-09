@@ -20,6 +20,7 @@ class CreateClientsTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->json('projects');
+            $table->integer('staff_id');
             $table->timestamps();
         });
     }

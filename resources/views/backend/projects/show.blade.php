@@ -47,14 +47,6 @@
                                     <div class="col-md-7">
                                         {{$project->state}}
                                     </div>
-                                    @if ($project->description != null)
-                                        <div class="col-md-5">
-                                            <b>Description:</b>
-                                        </div>
-                                        <div class="col-md-7">
-                                            {{$project->description}}
-                                        </div>
-                                    @endif
 
                                     <div class="col-md-5">
                                         <b>Total Cost:</b>
@@ -72,6 +64,15 @@
                                     <div class="col-md-7">
                                         {{$project->category->name}}
                                     </div>
+
+                                    @if ($project->description != null)
+                                        <div class="col-md-12">
+                                            <b>Description:</b>
+                                        </div>
+                                        <div class="col-md-12 mt-2">
+                                            {!! $project->description !!}
+                                        </div>
+                                    @endif
                                     <a href="{{route('admin.project.edit', $project->id)}}" class="btn btn-primary mt-3">Edit Info</a>
                                 </div>
 
@@ -80,7 +81,7 @@
                                     <div class="row">
                                         @foreach ($projectimages as $image)
                                             <div class="col-md-6">
-                                                <a href="http://127.0.0.1:8000/uploads/{{$image->screenshots}}" target="_blank" >
+                                                <a href="{{Storage::disk('uploads')->url($image->screenshots)}}" target="_blank" >
                                                     <img src="{{Storage::disk('uploads')->url($image->screenshots)}}" style="max-height: 150px;">
                                                 </a>
                                             </div>

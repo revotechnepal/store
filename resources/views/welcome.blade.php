@@ -20,6 +20,10 @@
             body {
                 font-family: 'Nunito';
             }
+            .relative.flex.items-top.justify-center.min-h-screen.bg-gray-100.dark\:bg-gray-900.sm\:items-center.sm\:pt-0 {
+                background-color: #2A3F54;
+                color: white;
+            }
         </style>
     </head>
     <body class="antialiased">
@@ -29,7 +33,7 @@
                     @auth
                         <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline"><b>Home</b></a>
                     @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline"><b>Admin Login</b></a>
+                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline" style="color: white;"><b>Admin Login</b></a>
 
                         {{-- @if (Route::has('register'))
                             <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline"><b>Register</b></a>

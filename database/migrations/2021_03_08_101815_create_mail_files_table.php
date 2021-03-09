@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMailMessagesTable extends Migration
+class CreateMailFilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateMailMessagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mail_messages', function (Blueprint $table) {
+        Schema::create('mail_files', function (Blueprint $table) {
             $table->id();
-            $table->longText('mailtostaff');
-            $table->longText('mailtoclient');
-            $table->longText('mailtothirdparty');
+            $table->integer('mail_id');
+            $table->string('file_name');
+            $table->string('file_path');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ class CreateMailMessagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mail_messages');
+        Schema::dropIfExists('mail_files');
     }
 }

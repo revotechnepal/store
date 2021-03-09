@@ -27,7 +27,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="month">Select a year and month to filter:</label>
-                                <input type="month" name="monthyear" value="2020-05" class="form-control">
+                                @php
+                                    $today = date('Y-m');
+                                @endphp
+                                <input type="month" name="monthyear" value="{{$today}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6 mt-4 text-left">

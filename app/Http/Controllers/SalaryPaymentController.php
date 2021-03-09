@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendance;
 use App\Models\Position;
 use App\Models\SalaryPayment;
 use App\Models\Staff;
@@ -46,17 +47,29 @@ class SalaryPaymentController extends Controller
                         return $paid_on;
                     })
                     ->addColumn('salary_type', function($row){
-                        $salary_type = '';
                         if ($row->salary_type == 'advance') {
                             $salary_type = 'Advance';
-                        }elseif ($row->salary_type == 'regular') {
+                        }elseif($row->salary_type == 'regular')
+                        {
                             $salary_type = 'Regular';
                         }
                         return $salary_type;
                     })
+                    // ->addColumn('unpaid_leave', function($row){
+                    //     $attendance = Attendance::where('monthyear', date('F, Y'))->where('staff_id', $row->staff_id)->get();
+                    //     $unattended = 0;
+                    //         foreach($attendance as $attend)
+                    //         {
+                    //             $unattended = $unattended + $attend->unpaid_leave;
+                    //         }
+                    //     $unpaid_leave = $unattended.' days';
+                    //     return $unpaid_leave;
+                    // })
                     ->addColumn('action', function($row){
+                        $previewurl = route('pdf.generate', $row->id);
                         $editurl = route('admin.salarypayment.edit', $row->id);
-                       $btn = "<a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>";
+                       $btn = "<a href='$previewurl' class='edit btn btn-info btn-sm' target='_blank'>Download (in PDF)</a>
+                                <a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>";
 
                         return $btn;
                     })
@@ -74,7 +87,7 @@ class SalaryPaymentController extends Controller
     public function create()
     {
         if(checkpermission(Auth::user()->role_id, 5)){
-            $staffs = Staff::latest()->get();
+            $staffs = Staff::latest()->where('status', 1)->get();
             return view('backend.staffs.payment', compact('staffs'));
         }else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
@@ -89,21 +102,32 @@ class SalaryPaymentController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request['for_month']);
         $data = $this->validate($request, [
             'staff_id' => 'required',
             'payment_date' => 'required',
+            'for_month' => 'required',
             'amount' => 'required|numeric',
             'salary_type' => 'required',
         ]);
+        $monthyear = date('F, Y', strtotime($request['for_month']));
 
-        $monthyear = date('F, Y', strtotime($request['payment_date']));
+        // $staff = Staff::findorFail($request['staff_id']);
+        // $multiplying_factor = $staff->allocated_salary / 30;
+        // $thismonthattendance = Attendance::where('monthyear', $monthyear)->where('staff_id', $staff->id)->get();
+        // $unpaidleave = 0;
+        // foreach ($thismonthattendance as $attendance) {
+        //     $unpaidleave = $unpaidleave + $attendance->unpaid_leave;
+        // }
+        // $deducting_salary = $unpaidleave * round($multiplying_factor);
+        // $receiving_salary = $staff->allocated_salary - $deducting_salary;
 
         $salaryPayment = SalaryPayment::create([
             'staff_id' => $data['staff_id'],
             'payment_date' => $data['payment_date'],
             'amount' => $data['amount'],
+            'monthyear' => $monthyear,
             'salary_type' => $data['salary_type'],
-            'monthyear' => $monthyear
         ]);
 
         $salaryPayment->save();
@@ -131,7 +155,7 @@ class SalaryPaymentController extends Controller
     public function edit($id)
     {
         $salarypayment = SalaryPayment::findorFail($id);
-        $staffs = Staff::get();
+        $staffs = Staff::where('status', 1)->get();
         return view('backend.staffs.editpayment', compact('salarypayment', 'staffs'));
     }
 
@@ -149,6 +173,7 @@ class SalaryPaymentController extends Controller
         $data = $this->validate($request, [
             'staff_id' => 'required',
             'payment_date' => 'required',
+            'for_month' => 'required',
             'amount' => 'required|numeric',
             'salary_type' => 'required',
         ]);
@@ -159,8 +184,8 @@ class SalaryPaymentController extends Controller
             'staff_id' => $data['staff_id'],
             'payment_date' => $data['payment_date'],
             'amount' => $data['amount'],
+            'monthyear' => $monthyear,
             'salary_type' => $data['salary_type'],
-            'monthyear' => $monthyear
         ]);
         return redirect()->route('admin.salarypayment.create')->with('success', 'Salary Payment updated successfully.');
     }

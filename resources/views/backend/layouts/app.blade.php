@@ -64,85 +64,53 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Dashboard</a></li>
-                  <li><a><i class="fa fa-sitemap"></i> Positions (Levels) <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-users"></i> Staff Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{route('admin.position.index')}}">All Positions</a></li>
-                      <li><a href="{{route('admin.position.create')}}">Create New Position</a></li>
-                      {{-- <li><a href="form_validation.html">Form Validation</a></li>
-                      <li><a href="form_wizards.html">Form Wizard</a></li>
-                      <li><a href="form_upload.html">Form Upload</a></li>
-                      <li><a href="form_buttons.html">Form Buttons</a></li> --}}
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-user"></i> Users (Dashboard) <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{route('admin.user.index')}}">View All Users</a></li>
-                      <li><a href="{{route('admin.user.create')}}">Create New User</a></li>
-                    </ul>
-                  </li>
-                  <li><a><i class="fa fa-users"></i> Our Staffs <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
+                        <li><a href="{{route('admin.position.index')}}">All Positions</a></li>
                       <li><a href="{{route('admin.staff.index')}}">All Staffs</a></li>
-                      <li><a href="{{route('admin.staff.create')}}">Add New Staff</a></li>
+                      {{-- <li><a href="{{route('admin.staff.create')}}">Add New Staff</a></li> --}}
                       <li><a href="{{route('admin.salarypayment.create')}}">Salary Payment</a></li>
-                      <li><a href="{{route('admin.salaryreport')}}">Monthly Salary Report</a></li>
+                      <li><a href="{{route('admin.attendance.create')}}">Enter Today's Attendance</a></li>
                     </ul>
                   </li>
-                  <li><a href="{{route('admin.category.index')}}"><i class="fa fa-tag"></i> Project Category</a></li>
-                  <li><a><i class="fa fa-product-hunt"></i> Our Projects <span class="fa fa-chevron-down"></span></a>
+                  {{-- <li><a href="{{route('admin.category.index')}}"><i class="fa fa-tag"></i> Project Category</a></li> --}}
+                  <li><a><i class="fa fa-product-hunt"></i> Project Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('admin.project.index')}}">View Our Projects</a></li>
                       <li><a href="{{route('admin.project.create')}}">Register New Project</a></li>
-                      {{-- <li><a href="morisjs.html">Moris JS</a></li>
-                      <li><a href="echarts.html">ECharts</a></li>
-                      <li><a href="other_charts.html">Other Charts</a></li> --}}
+                      <li><a href="{{route('admin.category.index')}}">View Project Category</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i> Our Clients <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i> Customer Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('admin.client.index')}}">Our Clients</a></li>
-                      <li><a href="{{route('admin.client.create')}}">Add new Clients</a></li>
+                      <li><a href="{{route('admin.visitor.index')}}">Our Visitors</a></li>
                     </ul>
                   </li>
-                  <li><a><i class="fa fa-male"></i> Visitors <span class="fa fa-chevron-down"></span></a>
+                  <li><a><i class="fa fa-user"></i> Users & Roles <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{route('admin.visitor.index')}}">All Visitors</a></li>
-                      <li><a href="{{route('admin.visitor.create')}}">Add Visitors</a></li>
+                      <li><a href="{{route('admin.user.index')}}">View All Users</a></li>
+                      <li><a href="{{route('admin.rolepermission.index')}}">View Roles and Permissions</a></li>
+                      {{-- <li><a href="{{route('admin.user.create')}}">Create New User</a></li> --}}
                     </ul>
                   </li>
-
-                  {{-- <li><a><i class="fa fa-clone"></i>Invoices (Payment) <span class="fa fa-chevron-down"></span></a>
-                    <ul class="nav child_menu">
-                      <li><a href="{{route('admin.payment.index')}}">All Invoices</a></li>
-                      <li><a href="{{route('admin.payment.create')}}">Make Payment</a></li>
-                    </ul>
-                  </li> --}}
                 </ul>
               </div>
               <div class="menu_section">
                 <h3>Usables</h3>
                 <ul class="nav side-menu">
-                    <li><a><i class="fa fa-lock"></i> Roles and Permissions <span class="fa fa-chevron-down"></span></a>
+                      <li><a><i class="fa fa-file"></i> Monthly Report <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
-                          <li><a href="{{route('admin.rolepermission.index')}}">View Roles and Permissions</a></li>
-                          <li><a href="{{route('admin.rolepermission.create')}}">Give New Permissions</a></li>
+                           <li><a href="{{route('admin.salaryreport')}}">Salary Report</a></li>
+                            <li><a href="{{route('admin.report')}}">Attendance Report</a></li>
                         </ul>
                       </li>
-                    <li><a><i class="fa fa-hand-spock-o"></i> Attendance <span class="fa fa-chevron-down"></span></a>
-                      <ul class="nav child_menu">
-                        <li><a href="{{route('admin.attendance.create')}}">Enter Today's Attendance</a></li>
-                        <li><a href="{{route('admin.report')}}">Attendance Report</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="{{route('admin.staffmail')}}"><i class="fa fa-envelope"></i> Send Mail </a>
-                    {{-- <ul class="nav child_menu">
-                      <li><a href="e_commerce.html">E-commerce</a></li>
-                      <li><a href="projects.html">Projects</a></li>
-                      <li><a href="project_detail.html">Project Detail</a></li>
-                      <li><a href="contacts.html">Contacts</a></li>
-                      <li><a href="profile.html">Profile</a></li>
-                    </ul> --}}
-                  </li>
+                        <li><a><i class="fa fa-envelope"></i> Mailings<span class="fa fa-chevron-down"></span></a>
+                            <ul class="nav child_menu">
+                                <li><a href="{{route('admin.mail.index')}}">Send Mail</a></li>
+                                <li><a href="{{route('admin.sentmails.index')}}">Our Sent Mails</a>
+                            </ul>
+                          </li>
                   <li><a><i class="fa fa-comments-o"></i> Third Party Services <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('admin.thirdparty.index')}}">Our Service Providers</a></li>
@@ -191,15 +159,6 @@
 
             <!-- /menu footer buttons -->
             <div class="sidebar-footer hidden-small">
-              {{-- <a data-toggle="tooltip" data-placement="top" title="Settings">
-                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-              </a>
-              <a data-toggle="tooltip" data-placement="top" title="Lock">
-                <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-              </a> --}}
               <a data-toggle="tooltip" data-placement="top" title="Logout"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
               </a>

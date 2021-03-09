@@ -1,6 +1,7 @@
 @extends('backend.layouts.app')
 @push('styles')
     <link href="https://cdn.rawgit.com/harvesthq/chosen/gh-pages/chosen.min.css" rel="stylesheet"/>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.css" rel="stylesheet">
 <style>
     .switch {
       position: relative;
@@ -118,20 +119,6 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <label for="">Description (optional):</label>
-                                            <textarea name="description" class="form-control" rows="6" placeholder="Details about the project..."></textarea>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <label for="screenshots">Project screenshots (Multiple images can be selected):</label>
-                                            <input type="file" class="form-control" name="screenshots[]" multiple>
-                                        </div>
-                                    </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="price">Total Cost (Rs.): </label>
@@ -142,23 +129,6 @@
                                         </div>
                                         <p style="color:green">Leave this empty if project is ongoing or cost is not finalized.</p>
                                     </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-1 text-right">
-                                        <div class="form-group">
-                                            <label class="switch">
-                                                <input type="checkbox" id="slider" name="slider" value="1">
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-5 text-left">
-                                        <div class="form-group">
-                                            <label for="" style="font-size: 25px;">Completed</label>
-                                        </div>
-                                    </div>
-
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="category">Project Category:</label>
@@ -171,6 +141,39 @@
                                             @error('category')
                                                 <p class="text-danger">{{$message}}</p>
                                             @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="">Description (optional):</label>
+                                            <textarea name="description" class="form-control summernote" rows="6" placeholder="Details about the project..."></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-6 mb-3">
+                                        <div class="form-group">
+                                            <label for="screenshots">Project screenshots (Multiple images can be selected):</label>
+                                            <input type="file" class="form-control" name="screenshots[]" multiple>
+                                            @error('screenshots')
+                                                <p class="text-danger">{{$message}}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-1 text-right">
+                                        <div class="form-group">
+                                            <label class="switch">
+                                                <input type="checkbox" id="slider" name="slider" value="1">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 text-left">
+                                        <div class="form-group">
+                                            <label for="" style="font-size: 25px;">Completed</label>
                                         </div>
                                     </div>
                                 </div>
@@ -194,6 +197,27 @@
             no_results_text: "Oops, nothing found!"
         });
     </script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/summernote/0.8.4/summernote.js"></script>
+<script>
+    $(document).ready(function() {
+    $('.summernote').summernote({
+        placeholder: 'Details about the project....',
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['font', ['strikethrough', 'superscript', 'subscript']],
+            ['fontsize', ['fontsize']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ]
+    });
+    });
+</script>
 @endpush
 
 

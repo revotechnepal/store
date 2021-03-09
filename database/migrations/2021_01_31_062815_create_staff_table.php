@@ -25,6 +25,7 @@ class CreateStaffTable extends Migration
             $table->string('contract');
             $table->integer('allocated_salary');
             $table->boolean('has_role');
+            $table->boolean('status')->nullable();
             $table->timestamps();
         });
     }

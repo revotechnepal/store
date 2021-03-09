@@ -14,7 +14,8 @@ class Client extends Model
         'email',
         'phone',
         'address',
-        'projects'
+        'projects',
+        'staff_id'
     ];
 
     protected $casts = [

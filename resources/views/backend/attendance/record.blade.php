@@ -13,6 +13,14 @@
                     </button>
                 </div>
             @endif
+            @if(session()->has('failure'))
+                <div class="alert alert-danger" style="position: none; margin-top: 4rem;">
+                    {{ session()->get('failure') }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
         <div class="card">
             <div class="card-header text-center">
                 <h3>Record Today's Attendance ({{date('F j, Y')}})</h3>
@@ -37,21 +45,19 @@
                                     <tr>
                                         <td>
                                             {{$staff->name}}
-                                            <input type="hidden" name="staffname[]" class="form-contdol text-center" value="{{$staff->id}}">
+                                            <input type="hidden" name="staffname[]" value="{{$staff->id}}">
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control" value="0" name="present[]">
-                                            <input type="checkbox" class="form-control" value="{{$staff->id}}" style="font-size: 5px;" name="present[]">
+                                            <input type="radio" class="form-control" value="1" style="font-size: 5px;" name="{{$staff->id}}">
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control" value="0" name="paid_leave[]">
-                                            <input type="checkbox" class="form-control" value="{{$staff->id}}" style="font-size: 5px;" name="paid_leave[]">
+                                            <input type="radio" class="form-control" value="2" style="font-size: 5px;" name="{{$staff->id}}">
                                         </td>
                                         <td>
-                                            <input type="hidden" class="form-control" value="0" name="unpaid_leave[]">
-                                            <input type="checkbox" class="form-control" value="{{$staff->id}}" style="font-size: 5px;" name="unpaid_leave[]">
+                                            <input type="radio" class="form-control" value="3" style="font-size: 5px;" name="{{$staff->id}}">
                                         </td>
                                     </tr>
+
                                 </tbody>
                             @endforeach
                     </table>

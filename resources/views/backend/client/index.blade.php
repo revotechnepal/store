@@ -37,6 +37,7 @@
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Contact no.</th>
                                 <th class="text-center">Address</th>
+                                <th class="text-center">Connected to</th>
                                 <th class="text-center">Action</th>
                             </tr>
                         </thead>
@@ -65,6 +66,7 @@
               {data: 'email', name: 'email'},
               {data: 'phone', name: 'phone'},
               {data: 'address', name: 'address'},
+              {data: 'staff', name: 'staff'},
               {
                   data: 'action',
                   name: 'action',

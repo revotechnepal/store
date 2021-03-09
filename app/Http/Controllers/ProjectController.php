@@ -46,15 +46,15 @@ class ProjectController extends Controller
                         $category = $row->category->name;
                         return $category;
                     })
-                    ->addColumn('price', function($row){
-                        $price = '';
-                        if ($row->price == null) {
-                            $price = 'Project ongoing';
-                        }else{
-                            $price = 'Rs. '.$row->price;
-                        }
-                        return $price;
-                    })
+                    // ->addColumn('price', function($row){
+                    //     $price = '';
+                    //     if ($row->price == null) {
+                    //         $price = 'Project ongoing';
+                    //     }else{
+                    //         $price = 'Rs. '.$row->price;
+                    //     }
+                    //     return $price;
+                    // })
                     ->addColumn('action', function($row){
                         $editurl = route('admin.project.edit', $row->id);
                         $showurl = route('admin.project.show', $row->id);
@@ -71,7 +71,7 @@ class ProjectController extends Controller
 
                                 return $btn;
                     })
-                    ->rawColumns(['staff', 'started_date', 'completed_date', 'category', 'price',  'action'])
+                    ->rawColumns(['staff', 'started_date', 'completed_date', 'category', 'action'])
                     ->make(true);
             }
             return view('backend.projects.index');
@@ -90,7 +90,7 @@ class ProjectController extends Controller
     {
         if(checkpermission(Auth::user()->role_id, 11)){
             $category = Category::latest()->get();
-            $staff = Staff::latest()->where('position_id', '!=', 11)->get();
+            $staff = Staff::latest()->where('status', 1)->where('position_id', '!=', 11)->get();
             return view('backend.projects.create', compact('staff', 'category'));
         }else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
@@ -114,7 +114,7 @@ class ProjectController extends Controller
             'description' => '',
             'slider' => '',
             'screenshots' =>'required',
-            'screenshots.*' => 'mimes:jpg,jpeg,png',
+            'screenshots.*' => 'required|mimes:jpg,jpeg,png',
             'price' => '',
             'category' => 'required'
         ]);
@@ -181,9 +181,10 @@ class ProjectController extends Controller
     public function edit($id)
     {
         $project = Project::findorFail($id);
-        $staff = Staff::latest()->where('position_id', '!=', 11)->get();
+        $projectscreenshots = ProjectImages::where('project_id', $project->id)->get();
+        $staff = Staff::latest()->where('status', 1)->where('position_id', '!=', 11)->get();
         $category = Category::latest()->get();
-        return view('backend.projects.edit', compact('project', 'staff', 'category'));
+        return view('backend.projects.edit', compact('project', 'staff', 'category', 'projectscreenshots'));
     }
 
     /**
@@ -196,7 +197,7 @@ class ProjectController extends Controller
     public function update(Request $request, $id)
     {
         $project = Project::findorFail($id);
-        $projectimages = ProjectImages::where('project_id', $project->id)->get();
+        // $projectimages = ProjectImages::where('project_id', $project->id)->get();
         $data = $this->validate($request, [
             'project_name' => 'required',
             'completed_by' => 'required',
@@ -204,8 +205,6 @@ class ProjectController extends Controller
             'completed_date' => '',
             'description' => '',
             'state'  => '',
-            'screenshots' => '',
-            'screenshots.*' => 'mimes:jpg,jpeg,png',
             'price' => '',
             'category' => 'required'
         ]);
@@ -231,24 +230,6 @@ class ProjectController extends Controller
             'category_id' => $request['category'],
         ]);
 
-        $imagename = '';
-        if($request->hasfile('screenshots')){
-            foreach ($projectimages as $image) {
-                Storage::disk('uploads')->delete($image->screenshots);
-                $image->delete();
-            }
-
-            $images = $request->file('screenshots');
-            foreach($images as $image){
-                $imagename = $image->store('project_screenshots', 'uploads');
-
-                $projectimage = ProjectImages::create([
-                    'project_id' => $project['id'],
-                    'screenshots' => $imagename,
-                ]);
-                $projectimage->save();
-            }
-        }
         return redirect()->route('admin.project.index')->with('success', 'Project Information updated successfully.');
     }
 
@@ -261,7 +242,6 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::findorFail($id);
-
         $clients =Client::latest()->get();
 
         foreach ($clients as $client) {
@@ -277,5 +257,37 @@ class ProjectController extends Controller
         $project->delete();
 
         return redirect()->back()->with('success', 'Project Deleted successfully.');
+    }
+
+    public function deletescreenshot($id)
+    {
+        $projectscreenshot = ProjectImages::findorFail($id);
+        $projectscreenshot->delete();
+
+        return redirect()->back()->with('success', 'Screenshot deleted successfully.');
+    }
+
+    public function addmoreimages(Request $request, $id)
+    {
+        // dd($request['screenshots']);
+        $this->validate($request, [
+            'screenshots' => 'required',
+            'screenshots.*' => 'required|mimes:jpg,jpeg,png',
+        ]);
+
+        $imagename = '';
+        if($request->hasfile('screenshots')){
+            $images = $request->file('screenshots');
+            foreach($images as $image){
+                $imagename = $image->store('project_screenshots', 'uploads');
+
+                $projectimage = ProjectImages::create([
+                    'project_id' => $id,
+                    'screenshots' => $imagename,
+                ]);
+                $projectimage->save();
+            }
+        }
+        return redirect()->back()->with('success', 'Screenshots added successfully.');
     }
 }

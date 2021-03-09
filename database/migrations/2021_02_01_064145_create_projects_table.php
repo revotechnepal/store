@@ -21,7 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('completed_date');
             $table->longText('description')->nullable();
             $table->string('state');
-            $table->string('price');
+            $table->string('price')->nullable();
             $table->integer('category_id');
             $table->timestamps();
         });

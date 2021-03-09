@@ -29,10 +29,10 @@ class AttendanceController extends Controller
     public function create(Request $request)
     {
         if (checkpermission(Auth::user()->role_id, 7) == 1) {
-            $staffs = Staff::latest()->where('position_id', '!=', 11)->get();
+            $staffs = Staff::where('status', 1)->get();
             if ($request->ajax()) {
                 $date = date('F j, Y');
-                $data = Attendance::latest()->where('date', $date )->with('staff')->get();
+                $data = Attendance::where('date', $date )->with('staff')->get();
                 return Datatables::of($data)
                     ->addIndexColumn()
                     ->addColumn('staffname', function($row){
@@ -74,25 +74,36 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        for ($i=0; $i < count($request['staffname']); $i++) {
+        $attendance = Attendance::where('date', date('F j, Y'))->first();
+        if ($attendance) {
+            return redirect()->back()->with('failure', 'Attendance for today is done.');
+        }
+        for ( $i=0 ; $i < count($request['staffname']); $i++) {
+
+            $number = $request['staffname'][$i];
+            // $this->validate($request,[
+            //     '$number' => 'required'
+            // ]);
+
             $present = 0;
             $paid_leave = 0;
             $unpaid_leave = 0;
-            if(in_array($request['staffname'][$i], $request['present']))
+
+            if($request[$number] == 1)
             {
                 $present = 1;
             }
-            if(in_array($request['staffname'][$i], $request['paid_leave']))
+            elseif($request[$number] == 2)
             {
                 $paid_leave = 1;
             }
-            if(in_array($request['staffname'][$i], $request['unpaid_leave']))
+            elseif($request[$number] == 3)
             {
                 $unpaid_leave = 1;
             }
 
             $attendance = Attendance::create([
-                'staff_id' => $request['staffname'][$i],
+                'staff_id' => $number,
                 'date' => date('F j, Y'),
                 'monthyear' => date('F, Y'),
                 'present' => $present,
@@ -183,7 +194,7 @@ class AttendanceController extends Controller
     {
         if(checkpermission(Auth::user()->role_id, 7) == 1){
             $date = date('F, Y');
-            $staff = Staff::where('position_id', '!=', 11)->latest()->first();
+            $staff = Staff::latest()->where('status', 1)->first();
             if($staff)
             {
                 $thismonthattendance = Attendance::where('monthyear', $date)->where('staff_id', $staff->id)->get();
@@ -206,8 +217,8 @@ class AttendanceController extends Controller
         ]);
 
         $date = date('F, Y');
-        $staffs = Staff::where('position_id', '!=', 11)->latest()->get();
-        $staff = Staff::where('position_id', '!=', 11)->latest()->first();
+        $staffs = Staff::latest()->where('status', 1)->get();
+        $staff = Staff::latest()->where('status', 1)->first();
         $thismonthattendance = Attendance::where('monthyear', $date)->where('staff_id', $staff->id)->get();
 
         $datetoselect = date('F, Y', strtotime($data['monthyear']));

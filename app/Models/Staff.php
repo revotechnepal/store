@@ -19,7 +19,8 @@ class Staff extends Model
         'documents',
         'contract',
         'allocated_salary',
-        'has_role'
+        'has_role',
+        'status',
     ];
 
     public function position()

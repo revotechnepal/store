@@ -46,7 +46,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>Documents (Resume/ CV) (pdf)</td>
-                                                    <td><a href="{{Storage::disk('uploads')->url($staff->document)}}" target="_blank">Click Here</a></td>
+                                                    <td><a href="{{Storage::disk('uploads')->url($staff->documents)}}" target="_blank">Click Here</a></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Contract/Agreement (pdf)</td>

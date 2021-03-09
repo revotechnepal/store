@@ -18,9 +18,9 @@
                                             <label for="attendance">Today's Attendance: </label>
                                             <select name="attendance" class="form-control">
                                                 <option value="">--Select an option--</option>
-                                                <option value="present">Present</option>
-                                                <option value="paid_leave">Paid Leave</option>
-                                                <option value="unpaid_leave">Absent</option>
+                                                <option value="present"{{$attendance->present == 1?'selected':''}}>Present</option>
+                                                <option value="paid_leave"{{$attendance->paid_leave == 1?'selected':''}}>Paid Leave</option>
+                                                <option value="unpaid_leave"{{$attendance->unpaid_leave == 1?'selected':''}}>Absent</option>
                                             </select>
                                             @error('attendance')
                                                 <p class="text-danger">{{$message}}</p>

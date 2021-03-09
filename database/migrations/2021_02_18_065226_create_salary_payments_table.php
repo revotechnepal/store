@@ -17,8 +17,8 @@ class CreateSalaryPaymentsTable extends Migration
             $table->id();
             $table->integer('staff_id');
             $table->string('payment_date');
-            $table->integer('amount');
-            $table->string('salary_type');
+            $table->integer('receiving_amount');
+            $table->string('salary_type')->nullable();
             $table->string('monthyear');
             $table->timestamps();
         });

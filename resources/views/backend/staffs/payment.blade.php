@@ -40,6 +40,18 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label for="for_month">For the month of:</label>
+                                @php
+                                    $today = date('Y-m');
+                                @endphp
+                                <input type="month" class="form-control" name="for_month" value="{{$today}}">
+                                @error('for_month')
+                                    <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label for="payment_date">Payment Date</label>
                                 <input type="date" class="form-control" name="payment_date">
                                 @error('payment_date')
@@ -82,6 +94,7 @@
 
                 <div class="card-header">
                     <h1 class="text-center">Salary paid for this month {{date('F, Y')}} </h1>
+                    <p class="text-center">(Total Working Days = 30 days)</p>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -96,8 +109,8 @@
                                             <th>Position</th>
                                             <th>Allocated Salary</th>
                                             <th>Paid Amount</th>
-                                            <th>Payment Type</th>
                                             <th>Paid on</th>
+                                            <th>Payment Type</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -135,8 +148,8 @@
               {data: 'position', name: 'position'},
               {data: 'allocated_salary', name: 'allocated_salary'},
               {data: 'amount', name: 'amount'},
-              {data: 'salary_type', name: 'salary_type'},
               {data: 'paid_on', name: 'paid_on'},
+              {data: 'salary_type', name: 'salary_type'},
               {
                   data: 'action',
                   name: 'action',

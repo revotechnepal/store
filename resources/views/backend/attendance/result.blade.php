@@ -31,7 +31,7 @@
             </div>
         @endif
 
-        <h2 class="text-center">Total working days for this month ({{date('F')}}) = {{count($thismonthattendance)}}</h2>
+        <h2 class="text-center">Total working days for this month ({{date('F')}}) = 30</h2>
 
         <div class="card">
             <div class="card-header text-center">
@@ -46,7 +46,10 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="month">Select a year and month to filter:</label>
-                                <input type="month" name="monthyear" value="2020-05" class="form-control">
+                                @php
+                                    $today = date('Y-m');
+                                @endphp
+                                <input type="month" name="monthyear" value="{{$today}}" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-6 mt-4 text-left">
@@ -66,7 +69,7 @@
                 @else
 
                 <h3 class="text-center mt-5">Monthly Attendance Report for the month {{$datetoselect}}</h3>
-                <h2 class="text-center mt-3">Total working days = {{count($requiredmonthattendance)}}</h2>
+                <h2 class="text-center mt-3">Total working days = 30</h2>
 
                 <div class="row mt-3">
                     <div class="div col-6"></div>

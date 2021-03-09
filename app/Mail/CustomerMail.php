@@ -11,16 +11,18 @@ class CustomerMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $data;
+    // private $data;
+    // private $attachments;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct($data, $mailfilespath)
     {
         $this->data = $data;
+        $this->mailfilespath = $mailfilespath;
     }
 
     /**
@@ -30,8 +32,12 @@ class CustomerMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('Email.customerMail')
+        $message =  $this->markdown('Email.customerMail')
                     ->subject($this->data['subject'])
                     ->with('data', $this->data);
+                foreach($this->mailfilespath as $filePath){
+                    $message->attach($filePath);
+                }
+        return $message;
     }
 }

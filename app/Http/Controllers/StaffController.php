@@ -39,7 +39,7 @@ class StaffController extends Controller
                         return $position;
                     })
                     ->addColumn('allocated_salary', function($row){
-                        if($row->allocated_salary == null){
+                        if($row->allocated_salary == 0){
                             $salary = '-';
                         }else {
                             $salary = 'Rs. '.$row->allocated_salary;
@@ -49,16 +49,39 @@ class StaffController extends Controller
                     ->addColumn('action', function($row){
                         $editurl = route('admin.staff.edit', $row->id);
                         $showurl = route('admin.staff.show', $row->id);
-                        $deleteurl = route('admin.staff.destroy', $row->id);
+                        $disableurl = route('admin.staff.disable', $row->id);
+                        $enableurl = route('admin.staff.enable', $row->id);
+                        // $deleteurl = route('admin.staff.destroy', $row->id);
                         $csrf_token = csrf_token();
-                        $btn = "<a href='$showurl' class='show btn btn-info btn-sm'>Show</a>
-                                <a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>
-                               <form action='$deleteurl' method='POST' style='display:inline;'>
+
+
+                        if ($row->status == 0) {
+                            $btn = "<a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>
+                            <a href='$showurl' class='show btn btn-info btn-sm'>Show</a>
+                                <form action='$enableurl' method='POST' style='display:inline;'>
                                 <input type='hidden' name='_token' value='$csrf_token'>
-                                <input type='hidden' name='_method' value='DELETE' />
-                                   <button type='submit' class='btn btn-danger btn-sm'>Delete</button>
-                               </form>
-                               ";
+                                <input type='hidden' name='_method' value='PUT' />
+                                    <button type='submit' class='btn btn-success btn-sm'>Enable</button>
+                                </form>
+                                ";
+                        } else {
+                            $btn = "<a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>
+                            <a href='$showurl' class='show btn btn-info btn-sm'>Show</a>
+                                <form action='$disableurl' method='POST' style='display:inline;'>
+                                <input type='hidden' name='_token' value='$csrf_token'>
+                                <input type='hidden' name='_method' value='PUT' />
+                                    <button type='submit' class='btn btn-danger btn-sm'>Disable</button>
+                                </form>
+                                ";
+                        }
+                        // $btn = "<a href='$showurl' class='show btn btn-info btn-sm'>Show</a>
+                        //         <a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>
+                        //        <form action='$deleteurl' method='POST' style='display:inline;'>
+                        //         <input type='hidden' name='_token' value='$csrf_token'>
+                        //         <input type='hidden' name='_method' value='DELETE' />
+                        //            <button type='submit' class='btn btn-danger btn-sm'>Delete</button>
+                        //        </form>
+                        //        ";
 
                                 return $btn;
                     })
@@ -80,10 +103,9 @@ class StaffController extends Controller
     public function create()
     {
         if(checkpermission(Auth::user()->role_id, 4)){
-            $position = Position::get();
+            $position = Position::where('status', 1)->get();
             $roles = Role::get();
             return view('backend.staffs.create', compact('position', 'roles'));
-
         }else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
         }
@@ -106,7 +128,7 @@ class StaffController extends Controller
             'national_id' => 'required|mimes:pdf',
             'documents' => 'required|mimes:pdf',
             'contract' => 'required|mimes:pdf',
-            'allocated_salary' => 'required|numeric',
+            'allocated_salary' => '',
             'role' => ''
         ]);
 
@@ -128,7 +150,12 @@ class StaffController extends Controller
                 {
                     return redirect()->back()->with('failure', 'Your position doesnot have role.');
                 }
-
+            }
+            $salary = 0;
+            if($request['allocated_salary'] == null){
+                $salary = 0;
+            }else{
+                $salary = $request['allocated_salary'];
             }
 
         $imagename = '';
@@ -154,8 +181,9 @@ class StaffController extends Controller
                 'national_id' => $national_id_name,
                 'documents' => $documents_name,
                 'contract' => $contract_name,
-                'allocated_salary' => $data['allocated_salary'],
+                'allocated_salary' => $salary,
                 'has_role' => $data['role'],
+                'status' => 1,
             ]);
 
             $staff->save();
@@ -185,7 +213,7 @@ class StaffController extends Controller
     public function edit($id)
     {
         $staff = Staff::findorFail($id);
-        $position = Position::get();
+        $position = Position::where('status',1)->get();
         $user = User::where('name', $staff->name)->first();
         $roles = Role::get();
         return view('backend.staffs.edit', compact('staff', 'position', 'user', 'roles'));
@@ -358,5 +386,28 @@ class StaffController extends Controller
 
         $staff->delete();
         return redirect()->back()->with('success', 'Staff information deleted successfully.');
+    }
+
+
+    public function disablestaff($id)
+    {
+        $position = Staff::findorfail($id);
+        $position->update([
+            'status' => '0',
+        ]);
+        //$staff->save();
+        return redirect()->route('admin.staff.index')->with('success', 'Staff Disabled Successfully.');
+
+    }
+
+    public function enablestaff($id)
+    {
+        $position = Staff::findorfail($id);
+        $position->update([
+            'status' => '1',
+        ]);
+        //$staff->save();
+        return redirect()->route('admin.staff.index')->with('success', 'Staff Enabled Successfully.');
+
     }
 }

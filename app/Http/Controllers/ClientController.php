@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use App\Models\Project;
+use App\Models\Staff;
 use Illuminate\Http\Request;
 use DataTables;
 use Illuminate\Support\Facades\Auth;
@@ -26,9 +27,13 @@ class ClientController extends Controller
                         $project_name = '';
                         for ($i = 0 ; $i < count($row->projects) ; $i++) {
                             $project = Project::where('id', $row->projects[$i])->first();
-                            $project_name = $project_name . $project->project_name .'<br>';
+                            $project_name = '<b>'. $project_name . $project->project_name .'</b><br>';
                         }
                         return $project_name;
+                    })
+                    ->addColumn('staff', function($row){
+                        $staff = Staff::where('id', $row->staff_id)->first();
+                        return $staff->name;
                     })
                     ->addColumn('action', function($row){
                         $editurl = route('admin.client.edit', $row->id);
@@ -44,7 +49,7 @@ class ClientController extends Controller
 
                                 return $btn;
                     })
-                    ->rawColumns(['projects', 'action'])
+                    ->rawColumns(['projects', 'staff', 'action'])
                     ->make(true);
             }
             return view('backend.client.index');
@@ -64,7 +69,8 @@ class ClientController extends Controller
     {
         if(checkpermission(Auth::user()->role_id, 9)){
             $projects = Project::get();
-            return view('backend.client.create', compact('projects'));
+            $staffs = Staff::where('status', 1)->get();
+            return view('backend.client.create', compact('projects', 'staffs'));
         }else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
         }
@@ -78,13 +84,14 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request['projects']);
+        // dd($request['staff_id']);
         $data = $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|numeric',
             'address' => 'required',
-            'projects' => 'required'
+            'projects' => 'required',
+            'staff_id' => 'required',
         ]);
 
         $client = Client::create([
@@ -93,6 +100,7 @@ class ClientController extends Controller
             'phone' => $data['phone'],
             'address' => $data['address'],
             'projects' => $data['projects'],
+            'staff_id' => $data['staff_id'],
         ]);
 
         $client->save();
@@ -122,7 +130,8 @@ class ClientController extends Controller
         if(checkpermission(Auth::user()->role_id, 9)){
             $client = Client::findorFail($id);
             $projects = Project::get();
-            return view('backend.client.edit', compact('client', 'projects'));
+            $staffs = Staff::where('status', 1)->get();
+            return view('backend.client.edit', compact('staffs', 'client', 'projects'));
         }
         else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
@@ -145,6 +154,7 @@ class ClientController extends Controller
             'phone' => 'required|numeric',
             'address' => 'required',
             'projects' => 'required',
+            'staff_id' => 'required'
         ]);
 
         $client->update([
@@ -153,6 +163,7 @@ class ClientController extends Controller
             'phone' => $data['phone'],
             'address' => $data['address'],
             'projects' => $data['projects'],
+            'staff_id' => $data['staff_id'],
         ]);
         return redirect()->route('admin.client.index')->with('success', 'Client information updated successfully.');
     }

@@ -15,7 +15,7 @@
             </div>
         </div>
     @endif
-    <h2 class="mb-3">Edit Salary Payment Record <a href="{{route('admin.salarypayment.create')}}" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i> Go back to payment</a></h2>
+    <h2 class="mb-3">Edit Salary Payment Record <a href="{{route('admin.salarypayment.create')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Go back to payment</a></h2>
     <div class="row">
         <div class="col-md-12">
             <div class="card p-3">
@@ -33,6 +33,18 @@
                                     @endforeach
                                 </select>
                                 @error('staff_id')
+                                    <p class="text-danger">{{$message}}</p>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="for_month">For the month of:</label>
+                                @php
+                                    $for_month = date('Y-m', strtotime($salarypayment->monthyear));
+                                @endphp
+                                <input type="month" class="form-control" name="for_month" value="{{@old('for_month')?@old('for_month'):$for_month}}">
+                                @error('for_month')
                                     <p class="text-danger">{{$message}}</p>
                                 @enderror
                             </div>
