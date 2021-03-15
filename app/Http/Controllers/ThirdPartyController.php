@@ -147,6 +147,7 @@ class ThirdPartyController extends Controller
     public function update(Request $request, $id)
     {
         $thirdParty = ThirdParty::findorFail($id);
+        $purchaseRecord = PurchaseRecord::where('thirdparty_name', $thirdParty->name)->get();
 
         $data = $this->validate($request, [
             'name' => 'required',
@@ -165,6 +166,12 @@ class ThirdPartyController extends Controller
             'pan' => $request['pan'],
             'address' => $data['address'],
         ]);
+
+        foreach ($purchaseRecord as $record) {
+            $record->update([
+                'thirdparty_name' => $data['name']
+            ]);
+        }
 
         return redirect()->route('admin.thirdparty.index')->with('success', 'Third Party information updated successfully.');
     }
