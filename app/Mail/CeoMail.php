@@ -16,9 +16,10 @@ class CeoMail extends Mailable
      *
      * @return void
      */
-    public function __construct($mailData)
+    public function __construct($mailData, $mailfilespath)
     {
         $this->mailData = $mailData;
+        $this->mailfilespath = $mailfilespath;
     }
 
     /**
@@ -28,8 +29,12 @@ class CeoMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('Email.ceoMail')
+        $message = $this->markdown('Email.ceoMail')
                     ->subject('Sent From RevoTech')
                     ->with('mailData', $this->mailData);
+                foreach($this->mailfilespath as $filePath){
+                    $message->attach($filePath);
+                }
+        return $message;
     }
 }

@@ -11,9 +11,6 @@ class CustomerMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    // private $data;
-    // private $attachments;
-
     /**
      * Create a new message instance.
      *

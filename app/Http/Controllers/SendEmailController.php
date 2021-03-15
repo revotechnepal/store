@@ -168,21 +168,22 @@ class SendEmailController extends Controller
                 $files = $request->file('files');
                 foreach($files as $file){
                     $file_name = $file->store('mail_files', 'uploads');
+                    $realname = $file->getClientOriginalName();
 
                     $mail_file = MailFiles::create([
                         'mail_id' => $sentmail->id,
                         'file_name' => $file_name,
+                        'file_path' => $realname,
                     ]);
                     $mail_file->save();
                 }
             }
 
             $mailings = MailFiles::where('mail_id', $sentmail->id)->get();
-            $mailfiles = [];
+            $mailfilespath = [];
             foreach ($mailings as $mails) {
-                array_push($mailfiles, Storage::disk('uploads')->url($mails->file_name));
+                array_push($mailfilespath, 'uploads/'.$mails->file_name);
             }
-            dd($mailfiles);
 
             $mailData = [
                 'mailto' => $email,
@@ -190,8 +191,9 @@ class SendEmailController extends Controller
             ];
             $emailto = 'blancmanandhar@gmail.com';
 
-            Mail::to($email)->send(new CustomerMail($data, $mailfiles));
-            Mail::to($emailto)->send(new CeoMail($mailData, $mailfiles));
+            set_time_limit(300);
+            Mail::to($email)->send(new CustomerMail($data, $mailfilespath));
+            Mail::to($emailto)->send(new CeoMail($mailData, $mailfilespath));
         }
 
         return redirect()->back()->with('success', 'Mail has been sent successfully to concerned personal.');

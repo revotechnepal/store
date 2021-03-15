@@ -21,6 +21,7 @@ class CreatePurchaseRecordsTable extends Migration
             $table->string('bill_number');
             $table->string('bill_amount');
             $table->string('paid_amount');
+            $table->string('due_amount');
             $table->string('monthyear');
             $table->timestamps();
         });

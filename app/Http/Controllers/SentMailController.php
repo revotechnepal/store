@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MailFiles;
 use App\Models\SentMail;
 use Illuminate\Http\Request;
 use DataTables;
@@ -64,7 +65,8 @@ class SentMailController extends Controller
     public function show($id)
     {
         $sentmail = SentMail::findorFail($id);
-        return view('backend.sentmail.show', compact('sentmail'));
+        $mail_files = MailFiles::where('mail_id', $id)->get();
+        return view('backend.sentmail.show', compact('sentmail', 'mail_files'));
     }
 
     /**

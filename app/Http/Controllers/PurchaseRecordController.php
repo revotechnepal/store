@@ -92,6 +92,7 @@ class PurchaseRecordController extends Controller
         ]);
 
         $currentyear = date('F, Y');
+        $due_amount = $data['bill_amount'] - $data['paid_amount'];
 
         $purchaseRecord = PurchaseRecord::create([
             'thirdparty_name' => $data['thirdparty_name'],
@@ -99,6 +100,7 @@ class PurchaseRecordController extends Controller
             'bill_number' => $data['bill_number'],
             'bill_amount' => $data['bill_amount'],
             'paid_amount' => $data['paid_amount'],
+            'due_amount' => $due_amount,
             'purpose' => $data['purpose'],
             'monthyear' => $currentyear,
         ]);
@@ -152,6 +154,7 @@ class PurchaseRecordController extends Controller
         ]);
 
         $currentyear = date('F, Y');
+        $due_amount = $data['bill_amount'] - $data['paid_amount'];
 
         $purchaseRecord->update([
             'thirdparty_name' => $data['thirdparty_name'],
@@ -159,6 +162,7 @@ class PurchaseRecordController extends Controller
             'bill_number' => $data['bill_number'],
             'bill_amount' => $data['bill_amount'],
             'paid_amount' => $data['paid_amount'],
+            'due_amount' => $due_amount,
             'purpose' => $data['purpose'],
             'monthyear' => $currentyear,
         ]);

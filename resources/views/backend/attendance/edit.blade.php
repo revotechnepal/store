@@ -27,6 +27,18 @@
                                             @enderror
                                         </div>
                                     </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="entry_time">Entry Time:</label>
+                                            <input type="time" class="form-control" value="{{@old('entry_time')?@old('entry_time'):$attendance->entry_time}}" name="entry_time">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="exit_time">Exit Time:</label>
+                                            <input type="time" class="form-control" value="{{@old('exit_time')?@old('exit_time'):$attendance->exit_time}}" name="exit_time">
+                                        </div>
+                                    </div>
                                 </div>
                                 <button type="submit" class="btn btn-success mt-3">Submit</button>
                             </form>

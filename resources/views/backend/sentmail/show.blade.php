@@ -59,6 +59,27 @@
                                 </div>
                             </div>
                       </div>
+
+                      @if (count($mail_files) > 0)
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Document Name</th>
+                                            <th>Link</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($mail_files as $file)
+                                            <tr>
+                                                <td>{{$file->file_path}}</td>
+                                                <td><a href="{{Storage::disk('uploads')->url($file->file_name)}}" target="_blank">Click Here!!</a></td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                      @endif
                   </div>
             </div>
         </div>

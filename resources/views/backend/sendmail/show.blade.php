@@ -40,7 +40,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6"><a href="" onclick="add_fieldtostaff()" class="btn btn-primary"><i class="fa fa-plus"></i> Add Receiptant</a></div>
+                                <div class="col-md-6"><a href="" onclick="add_fieldtostaff()" class="btn btn-primary"><i class="fa fa-plus"></i> Add Recipient</a></div>
 
                                 <div class="col-md-1 text-right">
                                     <label for="subject" style="font-size: 20px;">Subject:</label>

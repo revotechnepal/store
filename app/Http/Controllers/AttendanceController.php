@@ -29,7 +29,7 @@ class AttendanceController extends Controller
     public function create(Request $request)
     {
         if (checkpermission(Auth::user()->role_id, 7) == 1) {
-            $staffs = Staff::where('status', 1)->get();
+            $staffs = Staff::latest()->where('status', 1)->get();
             if ($request->ajax()) {
                 $date = date('F j, Y');
                 $data = Attendance::where('date', $date )->with('staff')->get();
@@ -50,13 +50,29 @@ class AttendanceController extends Controller
                         }
                         return $status;
                     })
+                    ->addColumn('entry_time', function($row){
+                        if($row->entry_time == null){
+                            $entry_time = "-";
+                        }else{
+                            $entry_time = date('h:i a', strtotime($row->entry_time));
+                        }
+                        return $entry_time;
+                    })
+                    ->addColumn('exit_time', function($row){
+                        if($row->exit_time == null){
+                            $exit_time = "-";
+                        }else{
+                            $exit_time = date('h:i a', strtotime($row->exit_time));
+                        }
+                        return $exit_time;
+                    })
                     ->addColumn('action', function($row){
                         $editurl = route('admin.attendance.edit', $row->id);
                         $btn = "<a href='$editurl' class='edit btn btn-primary btn-sm'>Edit</a>";
 
                         return $btn;
                     })
-                    ->rawColumns(['staffname', 'status', 'action'])
+                    ->rawColumns(['staffname', 'status', 'entry_time', 'exit_time', 'action'])
                     ->make(true);
             }
             return view('backend.attendance.record', compact('staffs'));
@@ -74,17 +90,9 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $attendance = Attendance::where('date', date('F j, Y'))->first();
-        if ($attendance) {
-            return redirect()->back()->with('failure', 'Attendance for today is done.');
-        }
         for ( $i=0 ; $i < count($request['staffname']); $i++) {
-
             $number = $request['staffname'][$i];
-            // $this->validate($request,[
-            //     '$number' => 'required'
-            // ]);
-
+            $entry_time = $request['time'.$number];
             $present = 0;
             $paid_leave = 0;
             $unpaid_leave = 0;
@@ -109,10 +117,22 @@ class AttendanceController extends Controller
                 'present' => $present,
                 'paid_leave' => $paid_leave,
                 'unpaid_leave' => $unpaid_leave,
+                'entry_time' => $entry_time
             ]);
             $attendance->save();
         }
         return redirect()->route('admin.attendance.create')->with('success', "Today's attendance record sucessfully recorded.");
+    }
+
+    public function updateexit(Request $request)
+    {
+        foreach ($request['attendances'] as $attendance) {
+            $attend = Attendance::findorFail($attendance);
+            $attend->update([
+                'exit_time' => $request['exit_time'.$attendance]
+            ]);
+        }
+        return redirect()->route('admin.attendance.create')->with('success', 'Exit Time updated successfully.');
     }
 
     /**
@@ -147,10 +167,13 @@ class AttendanceController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // dd($request['entry_time']);
         $attendance = Attendance::findorFail($id);
 
         $this->validate($request, [
-            'attendance' => 'required'
+            'attendance' => 'required',
+            'entry_time' => '',
+            'exit_time' => '',
         ]);
 
         if($request['attendance'] == 'present')
@@ -175,6 +198,10 @@ class AttendanceController extends Controller
                 'unpaid_leave' => 1,
             ]);
         }
+        $attendance->update([
+            'entry_time' => $request['entry_time'],
+            'exit_time' => $request['exit_time'],
+        ]);
 
         return redirect()->route('admin.attendance.create')->with('success', 'Staff Attendance updated successfully.');
     }

@@ -15,7 +15,9 @@ class Attendance extends Model
         'monthyear',
         'present',
         'paid_leave',
-        'unpaid_leave'
+        'unpaid_leave',
+        'entry_time',
+        'exit_time',
     ];
 
     public function staff()

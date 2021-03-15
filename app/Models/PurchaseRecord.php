@@ -15,6 +15,7 @@ class PurchaseRecord extends Model
         'bill_number',
         'bill_amount',
         'paid_amount',
+        'due_amount',
         'purpose',
         'monthyear',
     ];

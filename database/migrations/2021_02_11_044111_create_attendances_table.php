@@ -21,6 +21,8 @@ class CreateAttendancesTable extends Migration
             $table->integer('present')->default(0);
             $table->integer('paid_leave')->default(0);
             $table->integer('unpaid_leave')->default(0);
+            $table->string('entry_time')->nullable();
+            $table->string('exit_time')->nullable();
             $table->timestamps();
         });
     }

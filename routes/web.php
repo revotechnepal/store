@@ -50,10 +50,14 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware' => ['auth', 'roles']
     Route::post('addmoreimages/{id}', [ProjectController::class, 'addmoreimages'])->name('addmoreimages');
     Route::resource('payment', PaymentController::class);
     Route::resource('client', ClientController::class);
+    Route::get('generatereport', [ThirdPartyController::class, 'generatereport'])->name('generatereport');
+    Route::get('paydues/{id}/{date}', [ThirdPartyController::class, 'paydues'])->name('paydues');
+    Route::post('cleardues/{id}', [ThirdPartyController::class, 'cleardues'])->name('cleardues');
     Route::resource('thirdparty', ThirdPartyController::class);
     Route::resource('user', UserController::class);
     Route::resource('purchaserecord', PurchaseRecordController::class);
     Route::resource('sentmails', SentMailController::class);
+    Route::post('updateexit', [AttendanceController::class, 'updateexit'])->name('updateexit');
     Route::get('report', [AttendanceController::class, 'report'])->name('report');
     Route::get('reportgenerator', [AttendanceController::class, 'reportgenerator'])->name('reportgenerator');
     Route::resource('attendance', AttendanceController::class);
