@@ -25,7 +25,7 @@
                     </button>
                 </div>
             @endif
-            <h1 class="mt-3">Our Third Party Service Providers <a href="{{route('admin.thirdparty.create')}}" class="btn btn-primary btn-sm"> <i class="fa fa-plus" aria-hidden="true"></i> Add New Third Party</a></h1>
+            <h1 class="mt-3">Our Suppliers <a href="{{route('admin.thirdparty.create')}}" class="btn btn-primary btn-sm"> <i class="fa fa-plus" aria-hidden="true"></i> Add New Supplier</a></h1>
             <div class="card mt-3">
                 <div class="card-body table-responsive">
                     <table class="table table-bordered yajra-datatable text-center">

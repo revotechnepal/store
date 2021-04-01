@@ -54,7 +54,7 @@ class ThirdPartyController extends Controller
                             <input type='hidden' name='_method' value='DELETE' />
                                <button type='submit' class='btn btn-danger btn-sm'>Delete</button>
                            </form>
-                           ";
+                        ";
 
                             return $btn;
                 })
@@ -108,8 +108,7 @@ class ThirdPartyController extends Controller
         ]);
 
         $thirdParty->save();
-
-        return redirect()->route('admin.thirdparty.index')->with('success', 'Third Party information saved successfully.');
+        return redirect()->route('admin.thirdparty.index')->with('success', 'Supplier information saved successfully.');
     }
 
     /**
@@ -122,6 +121,7 @@ class ThirdPartyController extends Controller
     {
         $thirdParty = ThirdParty::findorFail($id);
         $monthexpense = PurchaseRecord::where('thirdparty_name', $thirdParty->name)->where('monthyear', date('F, Y'))->get();
+        // dd(date('F, Y', strtotime("last day of last month")));
         return view('backend.thirdparty.show', compact('thirdParty', 'monthexpense'));
     }
 
@@ -173,7 +173,7 @@ class ThirdPartyController extends Controller
             ]);
         }
 
-        return redirect()->route('admin.thirdparty.index')->with('success', 'Third Party information updated successfully.');
+        return redirect()->route('admin.thirdparty.index')->with('success', 'Supplier information updated successfully.');
     }
 
     /**
@@ -187,7 +187,7 @@ class ThirdPartyController extends Controller
         $thirdParty = ThirdParty::findorFail($id);
         $thirdParty->delete();
 
-        return redirect()->route('admin.thirdparty.index')->with('success', 'Third Party information deleted successfully.');
+        return redirect()->route('admin.thirdparty.index')->with('success', 'Supplier information deleted successfully.');
     }
 
     public function generatereport(Request $request)

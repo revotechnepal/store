@@ -81,7 +81,6 @@ class PurchaseRecordController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request['purchase_date']);
         $data = $this->validate($request, [
             'thirdparty_name' => 'required',
             'purchase_date' => 'required',

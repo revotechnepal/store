@@ -9,7 +9,7 @@
 	<link rel = "icon" href = "{{asset('uploads/icon.png')}}"
         type = "image/x-icon">
 
-    <title>RevoTech Inventory</title>
+    <title>{{env('APP_NAME')}}</title>
 
     <!-- Bootstrap -->
     <link href="{{asset('backend/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -38,7 +38,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{route('home')}}" class="site_title"> <span>RevoTech Inventory</span></a>
+              <a href="{{route('home')}}" class="site_title text-center"> <span>Revo Store</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -64,29 +64,42 @@
                 <h3>General</h3>
                 <ul class="nav side-menu">
                   <li><a href="{{route('home')}}"><i class="fa fa-home"></i> Dashboard</a></li>
+                  <li><a><i class="fa fa-exchange"></i> Stock Management <span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                      <li><a href="{{route('admin.product.index')}}">View Our Products</a></li>
+                      <li><a href="{{route('admin.product.create')}}">Register New Product</a></li>
+                      <li><a href="{{route('admin.category.index')}}">View Product Category</a></li>
+                    </ul>
+                  </li>
+                  <li><a><i class="fa fa-shopping-cart"></i> Sales Management<span class="fa fa-chevron-down"></span></a>
+                    <ul class="nav child_menu">
+                        <li><a href="{{route('admin.pos.create')}}">POS</a></li>
+                        <li><a href="#">All Records</a></li>
+                    </ul>
+                  </li>
                   <li><a><i class="fa fa-users"></i> Staff Management<span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                         <li><a href="{{route('admin.position.index')}}">All Positions</a></li>
                       <li><a href="{{route('admin.staff.index')}}">All Staffs</a></li>
-                      {{-- <li><a href="{{route('admin.staff.create')}}">Add New Staff</a></li> --}}
                       <li><a href="{{route('admin.salarypayment.create')}}">Salary Payment</a></li>
                       <li><a href="{{route('admin.attendance.create')}}">Enter Today's Attendance</a></li>
                     </ul>
                   </li>
+
                   {{-- <li><a href="{{route('admin.category.index')}}"><i class="fa fa-tag"></i> Project Category</a></li> --}}
-                  <li><a><i class="fa fa-product-hunt"></i> Project Management <span class="fa fa-chevron-down"></span></a>
+                  {{-- <li><a><i class="fa fa-product-hunt"></i> Project Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('admin.project.index')}}">View Our Projects</a></li>
                       <li><a href="{{route('admin.project.create')}}">Register New Project</a></li>
                       <li><a href="{{route('admin.category.index')}}">View Project Category</a></li>
                     </ul>
-                  </li>
-                  <li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i> Customer Management <span class="fa fa-chevron-down"></span></a>
+                  </li> --}}
+                  {{-- <li><a><i class="fa fa-thumbs-up" aria-hidden="true"></i> Customer Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('admin.client.index')}}">Our Clients</a></li>
                       <li><a href="{{route('admin.visitor.index')}}">Our Visitors</a></li>
                     </ul>
-                  </li>
+                  </li> --}}
                   <li><a><i class="fa fa-user"></i> Users & Roles <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="{{route('admin.user.index')}}">View All Users</a></li>
@@ -99,22 +112,24 @@
               <div class="menu_section">
                 <h3>Usables</h3>
                 <ul class="nav side-menu">
-                      <li><a><i class="fa fa-file"></i> Monthly Report <span class="fa fa-chevron-down"></span></a>
+                      {{-- <li><a><i class="fa fa-file"></i> Monthly Report <span class="fa fa-chevron-down"></span></a>
                         <ul class="nav child_menu">
                            <li><a href="{{route('admin.salaryreport')}}">Salary Report</a></li>
                             <li><a href="{{route('admin.report')}}">Attendance Report</a></li>
                         </ul>
-                      </li>
-                        <li><a><i class="fa fa-envelope"></i> Mailings<span class="fa fa-chevron-down"></span></a>
+                      </li> --}}
+                        {{-- <li><a><i class="fa fa-envelope"></i> Mailings<span class="fa fa-chevron-down"></span></a>
                             <ul class="nav child_menu">
                                 <li><a href="{{route('admin.mail.index')}}">Send Mail</a></li>
                                 <li><a href="{{route('admin.sentmails.index')}}">Our Sent Mails</a>
                             </ul>
-                          </li>
-                  <li><a><i class="fa fa-comments-o"></i> Third Party Services <span class="fa fa-chevron-down"></span></a>
+                          </li> --}}
+                  <li><a href="{{route('admin.ledger.index')}}"><i class="fa fa-book"></i> Monthly Ledger</a></li>
+                  </li>
+                  <li><a><i class="fa fa-comments-o"></i> Supplier Management <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="{{route('admin.thirdparty.index')}}">Our Service Providers</a></li>
-                      <li><a href="{{route('admin.thirdparty.create')}}">Add New Third Party</a></li>
+                      <li><a href="{{route('admin.thirdparty.index')}}">Our Suppliers</a></li>
+                      <li><a href="{{route('admin.thirdparty.create')}}">Add New Supplier</a></li>
                     </ul>
                   </li>
                   <li><a><i class="fa fa-list"></i> Purchase Records <span class="fa fa-chevron-down"></span></a>
@@ -325,6 +340,7 @@
 
       <!-- Custom Theme Scripts -->
       <script src="{{asset('backend/build/js/custom.min.js')}}"></script>
+      <script src="{{ mix('js/app.js') }}"></script>
       <script>
             setTimeout(function() {
                 $('.alert').fadeOut('slow');

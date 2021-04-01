@@ -78,7 +78,6 @@ class ProjectController extends Controller
         }else{
             return redirect()->route('home')->with('failure', 'You do not have permission for this.');
         }
-
     }
 
     /**
@@ -168,7 +167,6 @@ class ProjectController extends Controller
     {
         $project = Project::findorFail($id);
         $projectimages = ProjectImages::where('project_id', $project->id)->get();
-
         return view('backend.projects.show', compact('project', 'projectimages'));
     }
 
@@ -242,7 +240,7 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         $project = Project::findorFail($id);
-        $clients =Client::latest()->get();
+        $clients = Client::latest()->get();
 
         foreach ($clients as $client) {
             if (in_array($project->id, $client->projects)) {

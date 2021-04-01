@@ -13,7 +13,7 @@
             </div>
         </div>
     @endif
-    <h1 class="mb-3">{{$thirdParty->name}} <a href="{{route('admin.thirdparty.index')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Our ThirdParty Services</a></h1>
+    <h1 class="mb-3">{{$thirdParty->name}} <a href="{{route('admin.thirdparty.index')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Our Suppliers</a></h1>
     <div class="row">
         <div class="col-md-12">
             <div class="card p-3">

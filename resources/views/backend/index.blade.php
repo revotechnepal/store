@@ -22,32 +22,32 @@
             @endif
 
         <div class="container">
-            <p style="font-size: 40px; font-weight: bolder;" class="text-center mt-2">RevoTech Inventory</p>
+            <p style="font-size: 40px; font-weight: bolder;" class="text-center mt-2">Revo Store</p>
             <hr>
 
         <!-- top tiles -->
-            <div class="row mt-3">
+            {{-- <div class="row mt-3">
                 <div class="tile_count" style="width: 100%">
                 <div class="col-md-3 text-center tile_stats_count">
                     <span class="count_top mb-3" style="font-size: 20px;"><i class="fa fa-users"></i> Our Staffs</span>
-                    <div class="count" style="margin-top: 10px;">{{$staffcount}}</div>
+                    <div class="count" style="margin-top: 10px;">{{$staffcount}}</div> --}}
                     {{-- <span class="count_bottom"><i class="green">4% </i> From last Week</span> --}}
-                </div>
+                {{-- </div>
                 <div class="col-md-3 text-center tile_stats_count">
                     <span class="count_top mb-3" style="font-size: 20px;"><i class="fa fa-product-hunt"></i> Projects Completed</span>
-                    <div class="count" style="margin-top: 10px;">{{$projects}}</div>
+                    <div class="count" style="margin-top: 10px;">{{$projects}}</div> --}}
                     {{-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> From last Week</span> --}}
-                </div>
+                {{-- </div>
                 <div class="col-md-3 text-center tile_stats_count">
                     <span class="count_top mb-3" style="font-size: 20px;"><i class="fa fa-thumbs-up"></i> Our Happy Clients</span>
-                    <div class="count" style="margin-top: 10px;">{{$clientcount}}</div>
+                    <div class="count" style="margin-top: 10px;">{{$clientcount}}</div> --}}
                     {{-- <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span> --}}
-                </div>
+                {{-- </div>
                 <div class="col-md-3 text-center tile_stats_count">
                     <span class="count_top mb-3" style="font-size: 20px;"><i class="fa fa-money"></i> Third Party Expenses</span>
                     <div class="count" style="margin-top: 10px;">Rs. {{$expense}}</div>
                     <span class="count_bottom">(For month of {{date('F, Y')}})</span>
-                </div>
+                </div> --}}
                 {{-- <div class="col-md-6 text-center  tile_stats_count">
                     <span class="count_top"><i class="fa fa-user"></i> Total Collections</span>
                     <div class="count">4,315</div>
@@ -58,9 +58,9 @@
                     <div class="count">7,345</div>
                     <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> From last Week</span>
                 </div> --}}
-                </div>
+                {{-- </div>
             </div>
-            <hr>
+            <hr> --}}
         </div>
         <!-- /top tiles -->
 

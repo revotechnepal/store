@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="right_col" role="main">
-        <h1>New Third Party Service <a href="{{route('admin.thirdparty.index')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Our Third Party Services</a></h1>
+        <h1>Supplier Details <a href="{{route('admin.thirdparty.index')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Our Suppliers</a></h1>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -19,8 +19,8 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="name">Name : </label>
-                                            <input type="text" name="name" class="form-control" value="{{@old('name')}}" placeholder="Store/ Party Name">
+                                            <label for="name">Supplier Name : </label>
+                                            <input type="text" name="name" class="form-control" value="{{@old('name')}}" placeholder="Supplier Name">
                                             @error('name')
                                                 <p class="text-danger">{{$message}}</p>
                                             @enderror

@@ -29,7 +29,7 @@
         </button>
     </div>
 @endif
-<h1>{{$thirdParty->name}} <a href="{{route('admin.thirdparty.index')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Our Third Party Services</a></h1>
+<h1>{{$thirdParty->name}} <a href="{{route('admin.thirdparty.index')}}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> View Our Suppliers</a></h1>
 
 <div class="card">
     <div class="card-body">
@@ -55,7 +55,7 @@
         <hr>
         @if (count($monthexpense) == 0)
             <div class="col-md-12 mt-5 text-center">
-                <p style="font-size: 20px;">Sorry, We dont't have the data.</p>
+                <p style="font-size: 20px;">Sorry, We don't have the data.</p>
             </div>
         @else
 
